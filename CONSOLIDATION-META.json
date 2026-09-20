@@ -27,12 +27,10 @@
   "schema_version": "1.0",
   "snapshot": {
     "category": "08-communications-audio-and-information",
-    "copied_bytes": 24161363,
-    "copied_files": 5767,
+    "copied_bytes": 24196614,
+    "copied_files": 5768,
     "date": "2026-08-25",
-    "excluded_directories": [
-      "grc/gui_qt/resources/data"
-    ],
+    "excluded_directories": [],
     "excluded_files": [],
     "folder": "gnuradio-main",
     "kind": "independent-code-snapshot",
