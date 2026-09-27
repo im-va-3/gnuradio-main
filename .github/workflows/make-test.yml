@@ -220,7 +220,7 @@ jobs:
     - name: Setup MSYS2
       uses: msys2/setup-msys2@v2
       with:
-        msystem: MINGW64
+        msystem: UCRT64
         update: true
         install: >-
           git
@@ -259,11 +259,12 @@ jobs:
           thrift:p
           volk:p
           sccache:p
-    - name: download & install PyBind11 v3.0.1 release
+    - name: Install PyBind11 v3.0.1
       run: |
-        curl --silent https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-pybind11-3.0.1-3-any.pkg.tar.zst > pybind11.tar.zst && \
-        pacman -U --noconfirm pybind11.tar.zst && \
-        rm pybind11.tar.zst
+        pybind11_install_dir="$(cygpath -u "$RUNNER_TEMP")/pybind11"
+        python -m pip install --disable-pip-version-check --target "$pybind11_install_dir" pybind11==3.0.1
+        pybind11_cmake_dir="$(cygpath -w "$pybind11_install_dir/pybind11/share/cmake/pybind11")"
+        echo "PYBIND11_CMAKE_DIR=$pybind11_cmake_dir" >> "$(cygpath -u "$GITHUB_ENV")"
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Prepare sccache usage (if available)
@@ -281,7 +282,8 @@ jobs:
       run: |
         cmake -S . -B build \
           -GNinja \
-          -DCMAKE_INSTALL_PREFIX=${RUNNER_TEMP}/msys64/mingw64 \
+          -Dpybind11_DIR="${PYBIND11_CMAKE_DIR}" \
+          -DCMAKE_INSTALL_PREFIX=${RUNNER_TEMP}/msys64/ucrt64 \
           -DENABLE_DOXYGEN=OFF \
           -DENABLE_EXAMPLES=OFF \
           ${{ steps.enable_sccache.outputs.CXX_LAUNCHER }} \
