@@ -38,7 +38,11 @@ else
 fi
 SKIP_TESTS_STR=$( IFS="|"; echo "^(${SKIP_TESTS[*]})$" )
 
-ctest --build-config Release --output-on-failure --timeout 120 -j${CPU_COUNT} -E "$SKIP_TESTS_STR"
+if ! ctest --build-config Release --output-on-failure --timeout 120 -j${CPU_COUNT} -E "$SKIP_TESTS_STR"; then
+    echo "[DEBUG-GNURADIO-CTEST] Re-running failed tests serially to check for parallel-test interference"
+    ctest --build-config Release --output-on-failure --timeout 120 -j1 --rerun-failed || true
+    exit 1
+fi
 
 # now run the skipped tests to see the failures, but don't error out
 ctest --build-config Release --output-on-failure --timeout 120 -j${CPU_COUNT} -R "$SKIP_TESTS_STR" || exit 0
