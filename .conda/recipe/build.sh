@@ -20,6 +20,7 @@ cmake_config_args=(
     -DCMAKE_INSTALL_PREFIX=$PREFIX
     -DPYTHON_EXECUTABLE=$PYTHON
     -DGR_PYTHON_DIR=$SP_DIR
+    -DENABLE_EXAMPLES=OFF
 )
 
 cmake ${CMAKE_ARGS} -G "Ninja" .. "${cmake_config_args[@]}"

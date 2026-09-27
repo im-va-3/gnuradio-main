@@ -136,6 +136,7 @@ jobs:
         -DENABLE_DEFAULT=${{ matrix.enable_default || 'On' }}
         -DENABLE_DOXYGEN=${{ matrix.enable_doxygen || 'Off' }}
         -DENABLE_PYTHON=${{  matrix.enable_python  || 'On' }}
+        -DENABLE_EXAMPLES=Off
         ${{ steps.enable_sccache.outputs.CXX_LAUNCHER }}
         ${{ steps.enable_sccache.outputs.C_LAUNCHER }}
         ${{ matrix.cmakeflags }}
@@ -282,6 +283,7 @@ jobs:
           -GNinja \
           -DCMAKE_INSTALL_PREFIX=${RUNNER_TEMP}/msys64/mingw64 \
           -DENABLE_DOXYGEN=OFF \
+          -DENABLE_EXAMPLES=OFF \
           ${{ steps.enable_sccache.outputs.CXX_LAUNCHER }} \
           ${{ steps.enable_sccache.outputs.C_LAUNCHER }}
     - name: Build

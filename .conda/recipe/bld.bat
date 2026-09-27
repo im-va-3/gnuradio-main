@@ -14,6 +14,7 @@ cmake -G "Ninja" ^
     -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
     -DPYTHON_EXECUTABLE="%PYTHON%" ^
     -DGR_PYTHON_DIR="%SP_DIR%" ^
+    -DENABLE_EXAMPLES=OFF ^
     ..
 if errorlevel 1 exit 1
 
