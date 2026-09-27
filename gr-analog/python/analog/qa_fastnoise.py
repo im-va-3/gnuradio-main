@@ -96,7 +96,10 @@ class test_fastnoise_source(gr_unittest.TestCase):
 
         # mean, variance
         self.assertAlmostEqual(data.mean(), 0, places=2)
-        self.assertAlmostEqual(data.var(), 2, places=2)
+        # A Laplacian sample variance has standard error about sqrt(20 / N).
+        # Allow five standard errors so this statistical test is stable across
+        # platform math libraries while still detecting a wrong distribution.
+        self.assertAlmostEqual(data.var(), 2, delta=5 * numpy.sqrt(20 / len(data)))
 
     def test_001_complex_uniform_moments(self):
         data = self.run_test_complex(analog.GR_UNIFORM)
