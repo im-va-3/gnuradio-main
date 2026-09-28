@@ -102,3 +102,21 @@ made. For some files, changes have occurred in many consecutive years.
 These files may often have the format of a year range (e.g., "2006 - 2011"), 
 which indicates that these files have had copyrightable changes made 
 during each year in the range, inclusive.
+
+
+## Step-by-step user guide
+
+1. **Install a supported build.** On Debian/Ubuntu, the prebuilt package is <code>sudo apt install gnuradio</code>. For another platform or a source build, use the platform-specific installation links above.
+2. **Open GNU Radio Companion (GRC).** Run <code>gnuradio-companion</code>. Create a flowgraph and add a signal source, processing blocks, and a sink. For a simulated signal path, add a Throttle block with the chosen sample rate; a hardware source/sink normally provides its own pacing.
+3. **Connect and configure blocks.** Connect compatible stream/message ports, set sample rates and parameters, and add a time/frequency GUI sink to inspect the signal. Resolve missing-block or type errors before running.
+4. **Run and save the flowgraph.** Execute it in GRC, inspect the displayed output, then save the flowgraph file. GRC can generate Python; use that as a starting point for a scripted flowgraph.
+5. **Connect radio hardware.** Install the driver and GNU Radio out-of-tree module for the device, select its source/sink blocks, set center frequency, sample rate, gain, and antenna, and begin with receive-only or low-power tests.
+6. **Create reusable functionality.** Combine blocks into hierarchies or develop an out-of-tree module when a block should be reused. Use the Python/C++ API and project build documentation for custom runtimes and blocks.
+
+### Functionality map
+
+- Flowgraph runtime for streaming and message-based signal processing, with GUI construction in GNU Radio Companion and Python/C++ APIs.
+- Reusable source, sink, filter, modulation, demodulation, coding, synchronization, and signal-analysis blocks.
+- Software-defined radio hardware integration through device-specific drivers/modules; simulation workflows for digital communications and other sampled-signal applications.
+- See the [GNU Radio wiki](https://wiki.gnuradio.org/), [Doxygen API](https://www.gnuradio.org/doc/doxygen/), and [local docs](docs/) for block catalogs, flowgraph concepts, OOT modules, and supported devices.
+
